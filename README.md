@@ -1,2 +1,2 @@
-# Null-Linux-Public
-Null Linux but without my personal data in stupid text files
+# Null-OS-Public
+Null OS is just a binary based terminal at the moment, the compiler is crap and doesn't actually do anything at the moment
