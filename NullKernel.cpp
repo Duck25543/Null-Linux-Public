@@ -38,7 +38,7 @@ if (script[0] == 'i' && script[1] == 'n' && script[2] == 't' {
     int (*compiled_function)() = (int (*)()) 0x7000;
     int output_data = compiled_function();
 
-    bare_metal_print("MATH COMPILATION SUCCESSFUL. RESULT: ');
+    bare_metal_print("MATH COMPILATION SUCCESSFUL. RESULT: ");
 
     unsigned short* vga_buffer = (unsigned short*)0xB8000;
     vga_buffer[60] = (0x0A << 8) | (output_data + '0');
