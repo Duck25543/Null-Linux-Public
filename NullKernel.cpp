@@ -1,10 +1,47 @@
 //added stuff
 void bare_metal_print(const char* message) {
     unsigned short* vga_buffer = (unsigned short *)0xB8000;
-
-    for (int i = 0; message[i] != '\0'; i++) {
+     for (int i = 0; message[i] != '\0'; i++) {
         vga_buffer[i] = (0x0F << 8) | message[i];
     }
+}
+unsigned char* execution_buffer = (unsigned char*)0x7000;
+int code_index = 0;
+
+if (script[0] == 'i' && script[1] == 'n' && script[2] == 't' {
+    int val1 = 0;
+    int val2 = 0;
+    bool adding = false;
+
+    for (int i = 0; script[i] != '\0'; i++ {
+        if (script[i] == '=') {
+            if (script[i + 1] == ' ') val1 = script[i + 2] - '0';
+            else val1 = script[i + 1] - '0';
+        }
+        if (script[i] == '+') {
+            adding = true;
+            if (script[i + 1] == ' ') val2 = script[i + 2] - '0';
+            else val 2 = script[i + 1] - '0';
+        }
+    }
+
+    int result = val1;
+    if (adding) {
+        result = val1 + val2;
+    }
+
+    execution_buffer[code_index++] = 0xB8;
+    execution_buffer[code_index++] = (unsigned char)(result & 0xFF);
+    execution_buffer[code_index++] = 0x00;
+    execution_buffer[code_index++] = 0xC3;
+
+    int (*compiled_function)() = (int (*)()) 0x7000;
+    int output_data = compiled_function();
+
+    bare_metal_print("MATH COMPILATION SUCCESSFUL. RESULT: ');
+
+    unsigned short* vga_buffer = (unsigned short*)0xB8000;
+    vga_buffer[60] = (0x0A << 8) | (output_data + '0');
 }
 
 unsigned char read_keyboard_port() {
@@ -36,6 +73,10 @@ char scancode_to_ascii(unsigned char scancode) {
     if (scancode == 0x27) return ';';
     return 0;
 }
+
+void print_numeric_result(int num) {
+    unsigned short* vga_buffer = (unsigned short*) 0xB8000;
+    vga_buffer[60] = (0x0A << 8) | (num + '0');
 
 void compile_and_run_script(const char* script) {
     unsigned char* execution_buffer = (unsigned char*)0x7000;
