@@ -70,7 +70,7 @@ execute_line:
     mov al, 0x0D
     int 0x10
 
-    ; --- Your Evaluator Checks ---
+    ; --- Evaluator Checks ---
     cmp edx, 15            ; Command '1111' triggers clear
     je trigger_clear
 
